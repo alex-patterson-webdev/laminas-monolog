@@ -71,9 +71,9 @@ class LoggerFactory extends AbstractFactory
             if (!$handler instanceof HandlerInterface) {
                 throw new ServiceNotCreatedException(
                     sprintf(
-                        'The Monolog handler \'%s\' must be an object of type \'%s\'; '
+                        'The log handler \'%s\' must be an object of type \'%s\'; '
                         . '\'%s\' provided for service \'%s\'',
-                        $handlerName,
+                        is_string($handlerName) ? $handlerName : gettype($handler),
                         HandlerInterface::class,
                         is_object($handler) ? get_class($handler) : gettype($handler),
                         $serviceName,
@@ -104,20 +104,17 @@ class LoggerFactory extends AbstractFactory
         $processors = [];
         foreach ($processorConfigs as $processorName => $processor) {
             if (is_string($processor)) {
-                $processorName = $processor;
-                $processor = [];
+                $processor = $this->getService($container, $processor, $serviceName);
             }
 
             if (is_array($processor)) {
-                $processor = empty($processor)
-                    ? $this->getService($container, $processorName, $serviceName)
-                    : $this->buildService($container, $processorName, $processor, $serviceName);
+                $processor = $this->buildService($container, $processorName, $processor, $serviceName);
             }
 
             if (!$processor instanceof ProcessorInterface) {
                 throw new ServiceNotCreatedException(
                     sprintf(
-                        'The Monolog processor \'%s\' must be an object of type \'%s\'; '
+                        'The log processor \'%s\' must be an object of type \'%s\'; '
                         . '\'%s\' provided for service \'%s\'',
                         $processorName,
                         ProcessorInterface::class,

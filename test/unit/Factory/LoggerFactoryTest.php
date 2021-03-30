@@ -11,6 +11,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\NoopHandler;
 use Monolog\Handler\NullHandler;
+use Monolog\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -43,6 +44,36 @@ final class LoggerFactoryTest extends TestCase
         $factory = new LoggerFactory();
 
         $this->assertInstanceOf(FactoryInterface::class, $factory);
+    }
+
+    /**
+     * Assert that a ServiceNotCreatedException is thrown from invoke() if a handler is invalid
+     */
+    public function testInvokeWillThrowServiceNotCreatedExceptionIfProvidingInvalidHandlerConfiguration(): void
+    {
+        $logger = new LoggerFactory();
+
+        $serviceName = Logger::class;
+        $handler = new \stdClass();
+        $options = [
+            'handlers' => [
+                $handler,
+            ],
+        ];
+
+        $this->expectException(ServiceNotCreatedException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'The log handler \'%s\' must be an object of type \'%s\'; '
+                . '\'%s\' provided for service \'%s\'',
+                'object',
+                HandlerInterface::class,
+                get_class($handler),
+                $serviceName,
+            )
+        );
+
+        $logger($this->container, Logger::class, $options);
     }
 
     /**
