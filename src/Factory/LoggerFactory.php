@@ -18,7 +18,7 @@ use Psr\Container\ContainerInterface;
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
  * @package Arp\LaminasMonolog\Factory
  */
-final class LoggerFactory extends AbstractFactory
+class LoggerFactory extends AbstractFactory
 {
     /**
      * @param ServiceLocatorInterface&ContainerInterface $container
@@ -61,13 +61,11 @@ final class LoggerFactory extends AbstractFactory
         foreach ($handlerConfigs as $handlerName => $handler) {
             if (is_string($handler)) {
                 $handlerName = $handler;
-                $handler = [];
+                $handler = $this->getService($container, $handlerName, $serviceName);
             }
 
             if (is_array($handler)) {
-                $handler = empty($handler)
-                    ? $this->getService($container, $handlerName, $serviceName)
-                    : $this->buildService($container, $handlerName, $handler, $serviceName);
+                $handler = $this->buildService($container, $handlerName, $handler, $serviceName);
             }
 
             if (!$handler instanceof HandlerInterface) {
@@ -131,6 +129,7 @@ final class LoggerFactory extends AbstractFactory
 
             $processors[] = $processor;
         }
+
         return $processors;
     }
 }
