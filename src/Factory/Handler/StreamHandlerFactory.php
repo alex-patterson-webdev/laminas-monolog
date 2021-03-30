@@ -38,7 +38,20 @@ final class StreamHandlerFactory extends AbstractFactory
             );
         }
 
-        $streamHandler = new StreamHandler(
+        $className = $options['class_name'] ?? StreamHandler::class;
+        if (!is_a($className, StreamHandler::class, true)) {
+            throw new ServiceNotCreatedException(
+                sprintf(
+                    'The stream handler provided via configuration option \'class_name\' is invalid: '
+                    . 'The stream handler class must extend from \'%s\'; \'%s\' provided for service \'%s\'',
+                    StreamHandler::class,
+                    $className,
+                    $requestedName
+                )
+            );
+        }
+
+        $streamHandler = new $className(
             $stream,
             $options['level'] ?? Logger::DEBUG,
             $options['bubble'] ?? true,
@@ -51,6 +64,7 @@ final class StreamHandlerFactory extends AbstractFactory
             $options['formatter'] ?? LineFormatter::class,
             $requestedName
         );
+
         $streamHandler->setFormatter($formatter);
 
         return $streamHandler;

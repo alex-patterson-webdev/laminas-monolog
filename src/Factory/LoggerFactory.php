@@ -13,15 +13,17 @@ use Monolog\Processor\ProcessorInterface;
 use Psr\Container\ContainerInterface;
 
 /**
+ * Factory class used to create a new instance of a Monolog\Logger based on configuration options
+ *
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
  * @package Arp\LaminasMonolog\Factory
  */
 final class LoggerFactory extends AbstractFactory
 {
     /**
-     * @param ContainerInterface $container
-     * @param string             $requestedName
-     * @param array<mixed>|null  $options
+     * @param ServiceLocatorInterface&ContainerInterface $container
+     * @param string                                     $requestedName
+     * @param array<mixed>|null                          $options
      *
      * @return Logger
      *
@@ -42,19 +44,19 @@ final class LoggerFactory extends AbstractFactory
     }
 
     /**
-     * @param ContainerInterface&ServiceLocatorInterface $container
-     * @param iterable<HandlerInterface|array<mixed>>    $handlerConfigs
+     * @param ServiceLocatorInterface&ContainerInterface $container
+     * @param array<string|array|HandlerInterface>       $handlerConfigs
      * @param string                                     $serviceName
      *
-     * @return iterable<HandlerInterface>
+     * @return array<HandlerInterface>
      *
      * @throws ServiceNotCreatedException
      */
     private function getHandlers(
         ServiceLocatorInterface $container,
-        iterable $handlerConfigs,
+        array $handlerConfigs,
         string $serviceName
-    ): iterable {
+    ): array {
         $handlers = [];
         foreach ($handlerConfigs as $handlerName => $handler) {
             if (is_string($handler)) {
@@ -88,18 +90,19 @@ final class LoggerFactory extends AbstractFactory
     }
 
     /**
-     * @param ContainerInterface&ServiceLocatorInterface $container
-     * @param iterable<ProcessorInterface>|array<mixed>  $processorConfigs
+     * @param ServiceLocatorInterface&ContainerInterface $container
+     * @param array<string|array|ProcessorInterface>     $processorConfigs
      * @param string                                     $serviceName
      *
-     * @return iterable<ProcessorInterface>
+     * @return array<ProcessorInterface>
+     *
      * @throws ServiceNotCreatedException
      */
     private function getProcessors(
-        ContainerInterface $container,
-        iterable $processorConfigs,
+        ServiceLocatorInterface $container,
+        array $processorConfigs,
         string $serviceName
-    ): iterable {
+    ): array {
         $processors = [];
         foreach ($processorConfigs as $processorName => $processor) {
             if (is_string($processor)) {
@@ -113,7 +116,7 @@ final class LoggerFactory extends AbstractFactory
                     : $this->buildService($container, $processorName, $processor, $serviceName);
             }
 
-            if (!$processor instanceof HandlerInterface) {
+            if (!$processor instanceof ProcessorInterface) {
                 throw new ServiceNotCreatedException(
                     sprintf(
                         'The Monolog processor \'%s\' must be an object of type \'%s\'; '

@@ -1,6 +1,6 @@
 {
   "name": "alex-patterson-webdev/laminas-monolog",
-  "description": "Monolog integration module for Laminas Application",
+  "description": "Monolog integration module for Laminas Applications",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "license": "MIT",
