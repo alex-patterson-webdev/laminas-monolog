@@ -19,7 +19,7 @@ final class LineFormatterFactory extends AbstractNormalizerFormatterFactory
     /**
      * @param ContainerInterface $container
      * @param string             $requestedName
-     * @param array|null         $options
+     * @param array<mixed>|null  $options
      *
      * @return LineFormatter
      *

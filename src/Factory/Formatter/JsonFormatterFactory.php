@@ -17,7 +17,7 @@ final class JsonFormatterFactory extends AbstractNormalizerFormatterFactory
     /**
      * @param ContainerInterface $container
      * @param string             $requestedName
-     * @param array|null         $options
+     * @param array<mixed>|null  $options
      *
      * @return JsonFormatter
      *
