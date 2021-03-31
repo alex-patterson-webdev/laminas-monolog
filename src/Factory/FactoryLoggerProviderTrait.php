@@ -24,9 +24,9 @@ trait FactoryLoggerProviderTrait
     protected string $loggerService = Logger::class;
 
     /**
-     * @param ServiceLocatorInterface      $container
-     * @param LoggerInterface|string|array $logger
-     * @param string                       $serviceName
+     * @param ServiceLocatorInterface             $container
+     * @param LoggerInterface|string|array<mixed> $logger
+     * @param string                              $serviceName
      *
      * @return LoggerInterface
      *

@@ -64,7 +64,7 @@ final class LoggerFactoryTest extends TestCase
         $this->expectException(ServiceNotCreatedException::class);
         $this->expectExceptionMessage(
             sprintf(
-                'The log Handler \'%s\' must be an object of type \'%s\'; '
+                'The log handler \'%s\' must be an object of type \'%s\'; '
                 . '\'%s\' provided for service \'%s\'',
                 'object',
                 HandlerInterface::class,
