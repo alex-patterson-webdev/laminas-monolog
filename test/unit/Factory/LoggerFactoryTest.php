@@ -47,7 +47,7 @@ final class LoggerFactoryTest extends TestCase
     }
 
     /**
-     * Assert that a ServiceNotCreatedException is thrown from invoke() if a handler is invalid
+     * Assert that a ServiceNotCreatedException is thrown from invoke() if a Handler is invalid
      */
     public function testInvokeWillThrowServiceNotCreatedExceptionIfProvidingInvalidHandlerConfiguration(): void
     {
@@ -64,7 +64,7 @@ final class LoggerFactoryTest extends TestCase
         $this->expectException(ServiceNotCreatedException::class);
         $this->expectExceptionMessage(
             sprintf(
-                'The log handler \'%s\' must be an object of type \'%s\'; '
+                'The log Handler \'%s\' must be an object of type \'%s\'; '
                 . '\'%s\' provided for service \'%s\'',
                 'object',
                 HandlerInterface::class,
