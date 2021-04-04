@@ -9,6 +9,7 @@ use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Provides service factories the ability to resolve loggers from the container
@@ -46,6 +47,10 @@ trait FactoryLoggerProviderTrait
 
         if (is_array($logger)) {
             $logger = $container->build($this->loggerService, $logger);
+        }
+
+        if (null === $logger) {
+            $logger = new NullLogger();
         }
 
         if (!$logger instanceof LoggerInterface) {
