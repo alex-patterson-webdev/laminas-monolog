@@ -12,10 +12,14 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LogLevel;
 
 /**
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
+ * @author Alex Patterson <alex.patterson.webdev@gmail.com>
  * @package Arp\LaminasMonolog\Factory\Handler
+ *
+ * @phpstan-import-type Level from \Monolog\Logger
+ * @phpstan-import-type LevelName from \Monolog\Logger
  */
 final class PsrHandlerFactory extends AbstractFactory
 {
@@ -41,10 +45,13 @@ final class PsrHandlerFactory extends AbstractFactory
             );
         }
 
+        /** @var Level|LevelName|LogLevel::* $level */
+        $level = isset($options['level']) ? (int)$options['level'] : Logger::DEBUG;
+
         $handler = new PsrHandler(
             $this->getLogger($container, $options['logger'], $requestedName),
-            isset($options['level']) ? (int)$options['level'] : Logger::DEBUG,
-            isset($options['bubble']) ? (bool)$options['bubble'] : true
+            $level,
+            !isset($options['bubble']) || $options['bubble']
         );
 
         if (!empty($options['formatter'])) {

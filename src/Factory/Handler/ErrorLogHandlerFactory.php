@@ -9,10 +9,14 @@ use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
  * @package Arp\LaminasMonolog\Factory\Handler
+ *
+ * @phpstan-import-type Level from \Monolog\Logger
+ * @phpstan-import-type LevelName from \Monolog\Logger
  */
 final class ErrorLogHandlerFactory extends AbstractFactory
 {
@@ -32,11 +36,14 @@ final class ErrorLogHandlerFactory extends AbstractFactory
     ): ErrorLogHandler {
         $options = $options ?? $this->getServiceOptions($container, $requestedName);
 
+        /** @var Level|LevelName|LogLevel::* $level */
+        $level = isset($options['level']) ? (int)$options['level'] : Logger::DEBUG;
+
         return new ErrorLogHandler(
             isset($options['message_type']) ? (int)$options['message_type'] : ErrorLogHandler::OPERATING_SYSTEM,
-            isset($options['level']) ? (int)$options['level'] : Logger::DEBUG,
-            isset($options['bubble']) ? (bool)$options['bubble'] : true,
-            isset($options['expand_new_lines']) ? (bool)$options['expand_new_lines'] : false
+            $level,
+            !isset($options['bubble']) || $options['bubble'],
+            isset($options['expand_new_lines']) && $options['expand_new_lines']
         );
     }
 }

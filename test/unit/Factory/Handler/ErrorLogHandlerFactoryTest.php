@@ -6,6 +6,9 @@ namespace ArpTest\LaminasMonolog\Factory\Handler;
 
 use Arp\LaminasFactory\FactoryInterface;
 use Arp\LaminasMonolog\Factory\Handler\ErrorLogHandlerFactory;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -21,7 +24,7 @@ final class ErrorLogHandlerFactoryTest extends TestCase
     /**
      * @var ContainerInterface&MockObject
      */
-    private $container;
+    private ContainerInterface $container;
 
     /**
      * Prepare the test case dependencies
@@ -39,5 +42,24 @@ final class ErrorLogHandlerFactoryTest extends TestCase
         $factory = new ErrorLogHandlerFactory();
 
         $this->assertInstanceOf(FactoryInterface::class, $factory);
+    }
+
+    /**
+     * Assert that calls to __invoke() will return a configured ErrorLogHandler instance
+     *
+     * @throws ServiceNotCreatedException
+     */
+    public function testInvokeWillReturnValidErrorLogHandler(): void
+    {
+        $factory = new ErrorLogHandlerFactory();
+
+        $options = [
+            'level' => Logger::DEBUG,
+        ];
+
+        $this->assertInstanceOf(
+            ErrorLogHandler::class,
+            $factory($this->container, ErrorLogHandler::class, $options)
+        );
     }
 }
