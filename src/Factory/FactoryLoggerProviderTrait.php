@@ -8,6 +8,9 @@ use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Monolog\Logger;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -25,15 +28,17 @@ trait FactoryLoggerProviderTrait
     protected string $loggerService = Logger::class;
 
     /**
-     * @param ServiceLocatorInterface             $container
-     * @param LoggerInterface|string|array<mixed> $logger
-     * @param string                              $serviceName
+     * @param ContainerInterface|ServiceLocatorInterface $container
+     * @param LoggerInterface|string|array<mixed>        $logger
+     * @param string                                     $serviceName
      *
      * @return LoggerInterface
      *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    public function getLogger(ServiceLocatorInterface $container, $logger, string $serviceName): LoggerInterface
+    public function getLogger(ContainerInterface $container, $logger, string $serviceName): LoggerInterface
     {
         if (is_string($logger)) {
             if (!$container->has($logger)) {
@@ -45,7 +50,7 @@ trait FactoryLoggerProviderTrait
             $logger = $container->get($logger);
         }
 
-        if (is_array($logger)) {
+        if (is_array($logger) && $container instanceof ServiceLocatorInterface) {
             $logger = $container->build($this->loggerService, $logger);
         }
 

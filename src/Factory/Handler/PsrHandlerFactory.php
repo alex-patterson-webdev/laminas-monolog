@@ -11,6 +11,7 @@ use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LogLevel;
 
@@ -27,13 +28,14 @@ final class PsrHandlerFactory extends AbstractFactory
     use FactoryFormatterProviderTrait;
 
     /**
-     * @param ContainerInterface&ServiceLocatorInterface $container
-     * @param string                                     $requestedName
-     * @param array<mixed>|null                          $options
+     * @param ContainerInterface $container
+     * @param string             $requestedName
+     * @param array<mixed>|null  $options
      *
      * @return PsrHandler
      *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     public function __invoke(ContainerInterface $container, string $requestedName, array $options = null): PsrHandler
     {

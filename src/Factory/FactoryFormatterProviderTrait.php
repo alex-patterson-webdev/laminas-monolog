@@ -7,7 +7,9 @@ namespace Arp\LaminasMonolog\Factory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Monolog\Formatter\FormatterInterface;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Trait used to allow factories to resolve a Formatter from configuration options
@@ -25,6 +27,8 @@ trait FactoryFormatterProviderTrait
      * @return FormatterInterface
      *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     private function getFormatter(
         ContainerInterface $container,
