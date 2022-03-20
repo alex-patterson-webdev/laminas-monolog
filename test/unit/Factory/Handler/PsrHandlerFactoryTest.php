@@ -7,6 +7,7 @@ namespace ArpTest\LaminasMonolog\Factory\Handler;
 use Arp\LaminasFactory\FactoryInterface;
 use Arp\LaminasMonolog\Factory\Handler\PsrHandlerFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -97,6 +98,12 @@ final class PsrHandlerFactoryTest extends TestCase
                 [
                     'logger' => $this->createMock(LoggerInterface::class),
                     'level' => Logger::CRITICAL,
+                ]
+            ],
+            [
+                [
+                    'logger' => $this->createMock(LoggerInterface::class),
+                    'handler' => $this->createMock(HandlerInterface::class),
                 ]
             ]
         ];
