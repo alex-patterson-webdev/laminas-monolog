@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c44bdd3086d3e29ab4fe0b99023f6f62",
+    "content-hash": "368974df1b829e15e4c7b89285673423",
     "packages": [
         {
             "name": "alex-patterson-webdev/laminas-factory",
@@ -4568,7 +4568,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4 || >=8.0"
+        "php": ">=7.4 || >=8.0",
+        "ext-json": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
