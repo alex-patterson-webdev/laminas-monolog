@@ -6,6 +6,7 @@ namespace Arp\LaminasMonolog\Factory\Formatter;
 
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Monolog\Formatter\HtmlFormatter;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -22,6 +23,7 @@ final class HtmlFormatterFactory extends AbstractNormalizerFormatterFactory
      * @return HtmlFormatter
      *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     public function __invoke(ContainerInterface $container, string $requestedName, array $options = null): HtmlFormatter
     {

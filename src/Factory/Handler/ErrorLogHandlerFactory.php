@@ -8,6 +8,7 @@ use Arp\LaminasFactory\AbstractFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LogLevel;
 
@@ -28,6 +29,7 @@ final class ErrorLogHandlerFactory extends AbstractFactory
      * @return ErrorLogHandler
      *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     public function __invoke(
         ContainerInterface $container,

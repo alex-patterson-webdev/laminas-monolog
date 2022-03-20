@@ -6,6 +6,7 @@ namespace Arp\LaminasMonolog\Factory\Formatter;
 
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Monolog\Formatter\LineFormatter;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -24,6 +25,7 @@ final class LineFormatterFactory extends AbstractNormalizerFormatterFactory
      * @return LineFormatter
      *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     public function __invoke(ContainerInterface $container, string $requestedName, array $options = null): LineFormatter
     {
@@ -31,13 +33,10 @@ final class LineFormatterFactory extends AbstractNormalizerFormatterFactory
 
         $formatter = new LineFormatter(
             $options['format'] ?? null,
-            null,
-            isset($options['allow_line_breaks'])
-                ? (bool)$options['allow_line_breaks']
-                : false,
-            isset($options['ignore_empty_context_and_extra'])
-                ? (bool)$options['ignore_empty_context_and_extra']
-                : false,
+            $options['date_format'] ?? null,
+            isset($options['allow_inline_line_breaks']) && $options['allow_inline_line_breaks'],
+            isset($options['ignore_empty_context_and_extra']) && $options['ignore_empty_context_and_extra'],
+            isset($options['include_stack_traces']) && $options['include_stack_traces']
         );
 
         $this->configureNormalizerFormatter($formatter, $options);

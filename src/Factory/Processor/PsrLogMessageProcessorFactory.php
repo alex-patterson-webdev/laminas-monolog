@@ -35,9 +35,7 @@ final class PsrLogMessageProcessorFactory extends AbstractFactory
             (isset($options['date_format']) && is_string($options['date_format']))
                 ? $options['date_format']
                 : null,
-            isset($options['remove_used_context_fields'])
-                ? (bool)$options['remove_used_context_fields']
-                : false
+            isset($options['remove_used_context_fields']) && $options['remove_used_context_fields']
         );
     }
 }

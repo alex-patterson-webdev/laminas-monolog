@@ -31,14 +31,9 @@ final class MemoryPeakUsageProcessorFactory extends AbstractFactory
     ): MemoryPeakUsageProcessor {
         $options = $options ?? $this->getServiceOptions($container, $requestedName);
 
-        $realUsage = isset($options['real_usage'])
-            ? (bool)$options['real_usage']
-            : true;
-
-        $useFormatting = isset($options['use_formatting'])
-            ? (bool)$options['use_formatting']
-            : true;
-
-        return new MemoryPeakUsageProcessor($realUsage, $useFormatting);
+        return new MemoryPeakUsageProcessor(
+            !isset($options['real_usage']) || $options['real_usage'],
+            !isset($options['use_formatting']) || $options['use_formatting']
+        );
     }
 }
