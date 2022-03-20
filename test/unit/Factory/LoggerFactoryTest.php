@@ -47,7 +47,7 @@ final class LoggerFactoryTest extends TestCase
     }
 
     /**
-     * Assert that a ServiceNotCreatedException is thrown from invoke() if a handler is invalid
+     * Assert that a ServiceNotCreatedException is thrown from invoke() if a Handler is invalid
      */
     public function testInvokeWillThrowServiceNotCreatedExceptionIfProvidingInvalidHandlerConfiguration(): void
     {

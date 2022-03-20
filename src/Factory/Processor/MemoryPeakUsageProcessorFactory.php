@@ -6,21 +6,21 @@ namespace Arp\LaminasMonolog\Factory\Processor;
 
 use Arp\LaminasFactory\AbstractFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
-use Monolog\Processor\PsrLogMessageProcessor;
+use Monolog\Processor\MemoryPeakUsageProcessor;
 use Psr\Container\ContainerInterface;
 
 /**
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
  * @package Arp\LaminasMonolog\Factory\Processor
  */
-final class PsrLogMessageProcessorFactory extends AbstractFactory
+final class MemoryPeakUsageProcessorFactory extends AbstractFactory
 {
     /**
      * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param array<string, mixed>|null $options
+     * @param string             $requestedName
+     * @param array<mixed>|null  $options
      *
-     * @return PsrLogMessageProcessor
+     * @return MemoryPeakUsageProcessor
      *
      * @throws ServiceNotCreatedException
      */
@@ -28,14 +28,12 @@ final class PsrLogMessageProcessorFactory extends AbstractFactory
         ContainerInterface $container,
         string $requestedName,
         array $options = null
-    ): PsrLogMessageProcessor {
+    ): MemoryPeakUsageProcessor {
         $options = $options ?? $this->getServiceOptions($container, $requestedName);
 
-        return new PsrLogMessageProcessor(
-            (isset($options['date_format']) && is_string($options['date_format']))
-                ? $options['date_format']
-                : null,
-            isset($options['remove_used_context_fields']) && $options['remove_used_context_fields']
+        return new MemoryPeakUsageProcessor(
+            !isset($options['real_usage']) || $options['real_usage'],
+            !isset($options['use_formatting']) || $options['use_formatting']
         );
     }
 }

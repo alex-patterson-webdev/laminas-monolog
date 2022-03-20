@@ -45,7 +45,7 @@ class LoggerFactory extends AbstractFactory
 
     /**
      * @param ServiceLocatorInterface&ContainerInterface $container
-     * @param array<string|array|HandlerInterface>       $handlerConfigs
+     * @param array<mixed>                               $handlerConfigs
      * @param string                                     $serviceName
      *
      * @return array<HandlerInterface>
@@ -89,10 +89,10 @@ class LoggerFactory extends AbstractFactory
 
     /**
      * @param ServiceLocatorInterface&ContainerInterface $container
-     * @param array<string|array|ProcessorInterface>     $processorConfigs
+     * @param array<mixed>                               $processorConfigs
      * @param string                                     $serviceName
      *
-     * @return array<ProcessorInterface>
+     * @return array<callable>
      *
      * @throws ServiceNotCreatedException
      */

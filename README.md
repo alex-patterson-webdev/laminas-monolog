@@ -11,4 +11,22 @@ Monolog integration module for Laminas Applications
 
 Installation via [Composer](https://getcomposer.org).
 
-    require alex-patterson-webdev/laminas-monolog ^1
+    require alex-patterson-webdev/laminas-monolog ^0.1
+
+Register the modules services with the Laminas Service Manager by adding the module namespace to your applications `config/modules.config.php` file.
+
+    // config/modules.config.php
+    return [
+        // ...
+        'Arp\\LaminasMonolog',
+        // ...
+    ];
+
+## Loggers
+
+The easiest way to create a new Monolog logger is via configuration options. The `Arp\\Monolog` provides factory classes to allow 
+for _most_ of the default Monolog features to be optionally included, without having to write any code.
+
+
+
+

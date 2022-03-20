@@ -2,37 +2,34 @@
 
 declare(strict_types=1);
 
-namespace Arp\LaminasMonolog\Factory\Handler;
+namespace Arp\LaminasMonolog\Factory\Processor;
 
 use Arp\LaminasFactory\AbstractFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
-use Monolog\Handler\NullHandler;
-use Monolog\Logger;
-use Psr\Container\ContainerExceptionInterface;
+use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 
 /**
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory\Handler
+ * @package Arp\LaminasMonolog\Factory\Processor
  */
-final class NullHandlerFactory extends AbstractFactory
+final class UidProcessorFactory extends AbstractFactory
 {
     /**
      * @param ContainerInterface $container
      * @param string             $requestedName
      * @param array<mixed>|null  $options
      *
-     * @return NullHandler
+     * @return UidProcessor
      *
      * @throws ServiceNotCreatedException
-     * @throws ContainerExceptionInterface
      */
-    public function __invoke(ContainerInterface $container, string $requestedName, array $options = null): NullHandler
+    public function __invoke(ContainerInterface $container, string $requestedName, array $options = null): UidProcessor
     {
         $options = $options ?? $this->getServiceOptions($container, $requestedName);
 
-        $level = $options['level'] ?? Logger::DEBUG;
-
-        return new NullHandler($level);
+        return new UidProcessor(
+            isset($options['length']) ? (int)$options['length'] : 7
+        );
     }
 }
