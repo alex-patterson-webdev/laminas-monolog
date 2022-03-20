@@ -15,6 +15,7 @@ use Arp\LaminasMonolog\Factory\Processor\MemoryPeakUsageProcessorFactory;
 use Arp\LaminasMonolog\Factory\Processor\MemoryUsageProcessorFactory;
 use Arp\LaminasMonolog\Factory\Processor\PsrLogMessageProcessorFactory;
 use Arp\LaminasMonolog\Factory\Processor\TagProcessorFactory;
+use Arp\LaminasMonolog\Factory\Processor\UidProcessorFactory;
 use Arp\LaminasMonolog\Factory\Processor\WebProcessorFactory;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Monolog\Formatter\HtmlFormatter;
