@@ -16,9 +16,6 @@ use Psr\Container\ContainerInterface;
 /**
  * @covers \Arp\LaminasMonolog\Factory\Formatter\HtmlFormatterFactory
  * @covers \Arp\LaminasMonolog\Factory\Formatter\AbstractNormalizerFormatterFactory
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package ArpTest\LaminasMonolog\Factory\Formatter
  */
 final class HtmlFormatterFactoryTest extends TestCase
 {

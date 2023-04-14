@@ -10,22 +10,14 @@ use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
-/**
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory\Handler
- */
 final class StreamHandlerFactory extends AbstractFactory
 {
     /**
-     * @param ContainerInterface $container
-     * @param string             $requestedName
-     * @param array<mixed>|null  $options
-     *
-     * @return StreamHandler
-     *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     public function __invoke(ContainerInterface $container, string $requestedName, array $options = null): StreamHandler
     {
@@ -71,17 +63,12 @@ final class StreamHandlerFactory extends AbstractFactory
     }
 
     /**
-     * @param ContainerInterface        $container
-     * @param string|FormatterInterface $formatter
-     * @param string                    $serviceName
-     *
-     * @return FormatterInterface
-     *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     private function getFormatter(
         ContainerInterface $container,
-        $formatter,
+        string|FormatterInterface $formatter,
         string $serviceName
     ): FormatterInterface {
         if (is_string($formatter)) {

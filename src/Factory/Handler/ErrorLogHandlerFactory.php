@@ -13,21 +13,12 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LogLevel;
 
 /**
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory\Handler
- *
  * @phpstan-import-type Level from \Monolog\Logger
  * @phpstan-import-type LevelName from \Monolog\Logger
  */
 final class ErrorLogHandlerFactory extends AbstractFactory
 {
     /**
-     * @param ContainerInterface $container
-     * @param string             $requestedName
-     * @param array<mixed>|null  $options
-     *
-     * @return ErrorLogHandler
-     *
      * @throws ServiceNotCreatedException
      * @throws ContainerExceptionInterface
      */

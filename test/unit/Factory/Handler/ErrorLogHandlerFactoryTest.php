@@ -15,9 +15,6 @@ use Psr\Container\ContainerInterface;
 
 /**
  * @covers \Arp\LaminasMonolog\Factory\Handler\ErrorLogHandlerFactory
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package ArpTest\LaminasMonolog\Factory\Handler
  */
 final class ErrorLogHandlerFactoryTest extends TestCase
 {
@@ -26,9 +23,6 @@ final class ErrorLogHandlerFactoryTest extends TestCase
      */
     private ContainerInterface $container;
 
-    /**
-     * Prepare the test case dependencies
-     */
     public function setUp(): void
     {
         $this->container = $this->createMock(ContainerInterface::class);

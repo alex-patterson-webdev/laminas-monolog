@@ -10,24 +10,16 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Monolog\Processor\ProcessorInterface;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
-/**
- * Factory class used to create a new instance of a Monolog\Logger based on configuration options
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory
- */
 class LoggerFactory extends AbstractFactory
 {
     /**
-     * @param ServiceLocatorInterface&ContainerInterface $container
-     * @param string                                     $requestedName
-     * @param array<mixed>|null                          $options
-     *
-     * @return Logger
+     * @param ContainerInterface&ServiceLocatorInterface $container
      *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     public function __invoke(ContainerInterface $container, string $requestedName, array $options = null): Logger
     {
@@ -45,12 +37,12 @@ class LoggerFactory extends AbstractFactory
 
     /**
      * @param ServiceLocatorInterface&ContainerInterface $container
-     * @param array<mixed>                               $handlerConfigs
-     * @param string                                     $serviceName
+     * @param array<mixed> $handlerConfigs
      *
      * @return array<HandlerInterface>
      *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     private function getHandlers(
         ServiceLocatorInterface $container,
@@ -89,12 +81,12 @@ class LoggerFactory extends AbstractFactory
 
     /**
      * @param ServiceLocatorInterface&ContainerInterface $container
-     * @param array<mixed>                               $processorConfigs
-     * @param string                                     $serviceName
+     * @param array<mixed> $processorConfigs
      *
      * @return array<callable>
      *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     private function getProcessors(
         ServiceLocatorInterface $container,

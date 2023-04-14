@@ -20,9 +20,6 @@ use Psr\Log\LoggerInterface;
  * @covers \Arp\LaminasMonolog\Factory\Handler\PsrHandlerFactory
  * @covers \Arp\LaminasMonolog\Factory\FactoryLoggerProviderTrait
  * @covers \Arp\LaminasMonolog\Factory\FactoryFormatterProviderTrait
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package ArpTest\LaminasMonolog\Factory\Handler
  */
 final class PsrHandlerFactoryTest extends TestCase
 {
@@ -31,9 +28,6 @@ final class PsrHandlerFactoryTest extends TestCase
      */
     private ContainerInterface $container;
 
-    /**
-     * Prepare the test case dependencies
-     */
     public function setUp(): void
     {
         $this->container = $this->createMock(ContainerInterface::class);

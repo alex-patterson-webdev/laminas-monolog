@@ -16,9 +16,6 @@ use Psr\Container\ContainerInterface;
 /**
  * @covers \Arp\LaminasMonolog\Factory\Formatter\JsonFormatterFactory
  * @covers \Arp\LaminasMonolog\Factory\Formatter\AbstractNormalizerFormatterFactory
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package ArpTest\LaminasMonolog\Factory\Formatter
  */
 final class JsonFormatterFactoryTest extends TestCase
 {

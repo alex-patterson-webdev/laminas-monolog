@@ -17,9 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Arp\LaminasMonolog\Factory\LoggerFactory
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package ArpTest\LaminasMonolog\Factory
  */
 final class LoggerFactoryTest extends TestCase
 {
@@ -28,9 +25,6 @@ final class LoggerFactoryTest extends TestCase
      */
     private $container;
 
-    /**
-     * Prepare the test case dependencies
-     */
     public function setUp(): void
     {
         $this->container = $this->createMock(ServiceLocatorInterface::class);

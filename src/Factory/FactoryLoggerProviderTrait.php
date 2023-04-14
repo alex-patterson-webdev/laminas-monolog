@@ -14,25 +14,12 @@ use Psr\Container\NotFoundExceptionInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-/**
- * Provides service factories the ability to resolve loggers from the container
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory
- */
 trait FactoryLoggerProviderTrait
 {
-    /**
-     * @var string
-     */
     protected string $loggerService = Logger::class;
 
     /**
-     * @param ContainerInterface|ServiceLocatorInterface $container
-     * @param LoggerInterface|string|array<mixed>        $logger
-     * @param string                                     $serviceName
-     *
-     * @return LoggerInterface
+     * @param LoggerInterface|string|array<mixed> $logger
      *
      * @throws ServiceNotCreatedException
      * @throws ContainerExceptionInterface
@@ -72,9 +59,6 @@ trait FactoryLoggerProviderTrait
         return $logger;
     }
 
-    /**
-     * @param string $loggerService
-     */
     public function setLoggerService(string $loggerService): void
     {
         $this->loggerService = $loggerService;

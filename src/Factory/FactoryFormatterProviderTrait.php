@@ -11,28 +11,16 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-/**
- * Trait used to allow factories to resolve a Formatter from configuration options
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory
- */
 trait FactoryFormatterProviderTrait
 {
     /**
-     * @param ContainerInterface        $container
-     * @param string|FormatterInterface $formatter
-     * @param string                    $serviceName
-     *
-     * @return FormatterInterface
-     *
      * @throws ServiceNotCreatedException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
     private function getFormatter(
         ContainerInterface $container,
-        $formatter,
+        string|FormatterInterface $formatter,
         string $serviceName
     ): FormatterInterface {
         if (is_string($formatter)) {
