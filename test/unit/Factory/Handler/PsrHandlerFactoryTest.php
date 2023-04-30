@@ -7,6 +7,7 @@ namespace ArpTest\LaminasMonolog\Factory\Handler;
 use Arp\LaminasFactory\FactoryInterface;
 use Arp\LaminasMonolog\Factory\Handler\PsrHandlerFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
@@ -99,6 +100,64 @@ final class PsrHandlerFactoryTest extends TestCase
                     'logger' => $this->createMock(LoggerInterface::class),
                     'handler' => $this->createMock(HandlerInterface::class),
                 ]
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getInvokeWillConfigureFormatterData
+     *
+     * @param array<string, FormatterInterface|string> $options
+     *
+     * @throws ContainerExceptionInterface
+     * @throws ServiceNotCreatedException
+     */
+    public function testInvokeWillConfigureFormatter(array $options): void
+    {
+        $options = array_merge(
+            [
+                'logger' => $this->createMock(LoggerInterface::class),
+            ],
+            $options,
+        );
+
+        $factory = new PsrHandlerFactory();
+
+        if (is_string($options['formatter'])) {
+            $this->container->expects($this->once())
+                ->method('has')
+                ->with($options['formatter'])
+                ->willReturn(true);
+
+            /** @var FormatterInterface&MockObject $formatter */
+            $formatter = $this->createMock(FormatterInterface::class);
+
+            $this->container->expects($this->once())
+                ->method('get')
+                ->with($options['formatter'])
+                ->willReturn($formatter);
+        }
+
+        $handler = $factory($this->container, PsrHandler::class, $options);
+
+        $this->assertInstanceOf(PsrHandler::class, $handler);
+    }
+
+    /**
+     * @return array<int, array<int, array<string, string|FormatterInterface>>>
+     */
+    public function getInvokeWillConfigureFormatterData(): array
+    {
+        return [
+            [
+                [
+                    'formatter' => $this->createMock(FormatterInterface::class),
+                ],
+            ],
+            [
+                [
+                    'formatter' => 'FooFormatter',
+                ],
             ]
         ];
     }

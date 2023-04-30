@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Arp\LaminasMonolog\Factory\Handler;
 
 use Arp\LaminasFactory\AbstractFactory;
+use Arp\LaminasMonolog\Factory\FactoryFormatterProviderTrait;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
-use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -15,6 +15,8 @@ use Psr\Container\ContainerInterface;
 
 final class StreamHandlerFactory extends AbstractFactory
 {
+    use FactoryFormatterProviderTrait;
+
     /**
      * @throws ServiceNotCreatedException
      * @throws ContainerExceptionInterface
@@ -51,41 +53,10 @@ final class StreamHandlerFactory extends AbstractFactory
             $options['use_locking'] ?? true
         );
 
-        $formatter = $this->getFormatter(
-            $container,
-            $options['formatter'] ?? LineFormatter::class,
-            $requestedName
+        $streamHandler->setFormatter(
+            $this->getFormatter($container, $options['formatter'] ?? LineFormatter::class, $requestedName),
         );
 
-        $streamHandler->setFormatter($formatter);
-
         return $streamHandler;
-    }
-
-    /**
-     * @throws ServiceNotCreatedException
-     * @throws ContainerExceptionInterface
-     */
-    private function getFormatter(
-        ContainerInterface $container,
-        string|FormatterInterface $formatter,
-        string $serviceName
-    ): FormatterInterface {
-        if (is_string($formatter)) {
-            $formatter = $this->getService($container, $formatter, $serviceName);
-        }
-
-        if (!$formatter instanceof FormatterInterface) {
-            throw new ServiceNotCreatedException(
-                sprintf(
-                    'The Monolog formatter must be an object of type \'%s\'; \'%s\' provided for service \'%s\'',
-                    FormatterInterface::class,
-                    is_object($formatter) ? get_class($formatter) : gettype($formatter),
-                    $serviceName,
-                )
-            );
-        }
-
-        return $formatter;
     }
 }
