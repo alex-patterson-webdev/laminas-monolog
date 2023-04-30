@@ -7,8 +7,12 @@ namespace ArpTest\LaminasMonolog\Factory\Handler;
 use Arp\LaminasFactory\FactoryInterface;
 use Arp\LaminasMonolog\Factory\Handler\StreamHandlerFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Monolog\Formatter\FormatterInterface;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Monolog\Test\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
@@ -17,7 +21,7 @@ use Psr\Container\ContainerInterface;
  */
 final class StreamHandlerFactoryTest extends TestCase
 {
-    private ContainerInterface $container;
+    private ContainerInterface&MockObject $container;
 
     public function setUp(): void
     {
@@ -26,8 +30,8 @@ final class StreamHandlerFactoryTest extends TestCase
 
     public function testImplementsFactoryInterface(): void
     {
-        $handler = new StreamHandlerFactory();
-        $this->assertInstanceOf(FactoryInterface::class, $handler);
+        $factory = new StreamHandlerFactory();
+        $this->assertInstanceOf(FactoryInterface::class, $factory);
     }
 
     /**
@@ -36,7 +40,7 @@ final class StreamHandlerFactoryTest extends TestCase
      */
     public function testMissingStreamConfigurationThrowsServiceNotCreatedException(): void
     {
-        $handler = new StreamHandlerFactory();
+        $factory = new StreamHandlerFactory();
 
         $requestedName = StreamHandlerFactory::class;
 
@@ -45,7 +49,7 @@ final class StreamHandlerFactoryTest extends TestCase
             sprintf('The required \'stream\' configuration option is missing for service \'%s\'', $requestedName)
         );
 
-        $handler($this->container, $requestedName, []);
+        $factory($this->container, $requestedName, []);
     }
 
     /**
@@ -53,7 +57,7 @@ final class StreamHandlerFactoryTest extends TestCase
      */
     public function testInvalidClassNameConfigurationThrowsServiceNotCreatedException(): void
     {
-        $handler = new StreamHandlerFactory();
+        $factory = new StreamHandlerFactory();
 
         $requestedName = StreamHandlerFactory::class;
 
@@ -73,6 +77,65 @@ final class StreamHandlerFactoryTest extends TestCase
             ),
         );
 
-        $handler($this->container, $requestedName, $options);
+        $factory($this->container, $requestedName, $options);
+    }
+
+    /**
+     * @dataProvider getInvokeData
+     *
+     * @param array<string, mixed> $options
+     *
+     * @throws ContainerExceptionInterface
+     * @throws ServiceNotCreatedException
+     */
+    public function testInvoke(array $options): void
+    {
+        $requestedName = StreamHandler::class;
+        $options = array_merge(
+            [
+                'stream' => 'Mock stream value',
+            ],
+            $options,
+        );
+
+        $factory = new StreamHandlerFactory();
+
+        $this->container->expects($this->once())
+            ->method('has')
+            ->with($options['formatter'] ?? LineFormatter::class)
+            ->willReturn(true);
+
+        /** @var FormatterInterface&MockObject $formatter */
+        $formatter = $this->createMock(FormatterInterface::class);
+        $this->container->expects($this->once())
+            ->method('get')
+            ->with($options['formatter'] ?? LineFormatter::class)
+            ->willReturn($formatter);
+
+        $this->assertInstanceOf(StreamHandler::class, $factory($this->container, $requestedName, $options));
+    }
+
+    /**
+     * @return array<int, array<int, array<string, mixed>>>
+     */
+    public function getInvokeData(): array
+    {
+        return [
+            [
+                [],
+            ],
+            [
+                [
+                    'level' => Logger::CRITICAL,
+                    'bubble' => false,
+                ],
+            ],
+            [
+                [
+                    'file_permission' => 655,
+                    'use_locking' => false,
+                ],
+            ]
+        ];
     }
 }
