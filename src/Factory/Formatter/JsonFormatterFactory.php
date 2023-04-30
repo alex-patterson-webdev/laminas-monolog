@@ -9,19 +9,9 @@ use Monolog\Formatter\JsonFormatter;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
-/**
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory\Formatter
- */
 final class JsonFormatterFactory extends AbstractNormalizerFormatterFactory
 {
     /**
-     * @param ContainerInterface $container
-     * @param string             $requestedName
-     * @param array<mixed>|null  $options
-     *
-     * @return JsonFormatter
-     *
      * @throws ServiceNotCreatedException
      * @throws ContainerExceptionInterface
      */

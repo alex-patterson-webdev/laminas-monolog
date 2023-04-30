@@ -9,21 +9,9 @@ use Monolog\Formatter\LineFormatter;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
-/**
- * Create a new LineFormatter instance based on configuration options
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory\Formatter
- */
 final class LineFormatterFactory extends AbstractNormalizerFormatterFactory
 {
     /**
-     * @param ContainerInterface $container
-     * @param string             $requestedName
-     * @param array<mixed>|null  $options
-     *
-     * @return LineFormatter
-     *
      * @throws ServiceNotCreatedException
      * @throws ContainerExceptionInterface
      */

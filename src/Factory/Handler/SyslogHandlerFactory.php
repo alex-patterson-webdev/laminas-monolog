@@ -8,22 +8,14 @@ use Arp\LaminasFactory\AbstractFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Monolog\Handler\SyslogHandler;
 use Monolog\Logger;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
-/**
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory\Handler
- */
 final class SyslogHandlerFactory extends AbstractFactory
 {
     /**
-     * @param ContainerInterface $container
-     * @param string             $requestedName
-     * @param array<mixed>|null  $options
-     *
-     * @return SyslogHandler
-     *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     public function __invoke(
         ContainerInterface $container,
@@ -43,7 +35,7 @@ final class SyslogHandlerFactory extends AbstractFactory
             $ident,
             $options['facility'] ?? LOG_USER,
             $options['level'] ?? Logger::DEBUG,
-            isset($options['bubble']) ? (bool)$options['bubble'] : true,
+            !isset($options['bubble']) || (bool)$options['bubble'],
             $options['logopts'] ?? LOG_PID
         );
     }

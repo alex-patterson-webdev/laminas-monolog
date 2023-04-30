@@ -16,9 +16,6 @@ use Psr\Container\ContainerInterface;
 
 /**
  * @covers \Arp\LaminasMonolog\Factory\Handler\NullHandlerFactory
- *
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Factory\Handler
  */
 final class NullHandlerFactoryTest extends TestCase
 {
@@ -27,9 +24,6 @@ final class NullHandlerFactoryTest extends TestCase
      */
     private ContainerInterface $container;
 
-    /**
-     * Prepare the test case dependencies
-     */
     public function setUp(): void
     {
         $this->container = $this->createMock(ContainerInterface::class);

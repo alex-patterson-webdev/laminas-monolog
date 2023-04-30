@@ -7,22 +7,14 @@ namespace Arp\LaminasMonolog\Factory\Processor;
 use Arp\LaminasFactory\AbstractFactory;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Monolog\Processor\PsrLogMessageProcessor;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
-/**
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory\Processor
- */
 final class PsrLogMessageProcessorFactory extends AbstractFactory
 {
     /**
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param array<string, mixed>|null $options
-     *
-     * @return PsrLogMessageProcessor
-     *
      * @throws ServiceNotCreatedException
+     * @throws ContainerExceptionInterface
      */
     public function __invoke(
         ContainerInterface $container,

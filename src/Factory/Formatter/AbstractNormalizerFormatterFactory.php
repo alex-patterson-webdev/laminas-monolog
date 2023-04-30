@@ -7,17 +7,10 @@ namespace Arp\LaminasMonolog\Factory\Formatter;
 use Arp\LaminasFactory\AbstractFactory;
 use Monolog\Formatter\NormalizerFormatter;
 
-/**
- * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Arp\LaminasMonolog\Factory\Formatter
- */
 abstract class AbstractNormalizerFormatterFactory extends AbstractFactory
 {
     /**
-     * Configure the normalizer formatter with the provided $options
-     *
-     * @param NormalizerFormatter $formatter
-     * @param array<mixed>        $options
+     * @param array<mixed> $options
      */
     protected function configureNormalizerFormatter(NormalizerFormatter $formatter, array $options): void
     {
