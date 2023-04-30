@@ -33,6 +33,11 @@
       "ArpTest\\LaminasMonolog\\" : "test/unit/"
     }
   },
+  "extra": {
+    "laminas": {
+      "component": "Arp\\LaminasMonolog"
+    }
+  },
   "scripts": {
     "arp:test": [
       "@arp:check",
